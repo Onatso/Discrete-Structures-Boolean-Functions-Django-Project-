@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+{% include 'flatpages/default.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>T</title>
+</head>
+
+<body>
+
+    {% block title %}
+    <h3>
+    <center>ЗАДАНИЯ</center>
+    </h3>
+    <hr>
+    <p></p>
+    <p></p>
+    <h5>
+
+    </h5>
+    <p></p>
+    <p></p>
+    {% endblock title %}
+
+    {% block content %}
+    {% if Tasks %}
+
+    <h5>
+    <table>
+        <tr>
+            <td>Автор задачи</td>
+            <td>Название </td>
+            <td>Описание</td>
+            <td>Уровень</td>
+        </tr>
+        {% for task in Tasks %}
+        <p></p>
+        <tr>
+            <td>{{task.author.user.username}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task.level}}</td>
+            <td>
+                <a href="{{task.get_absolute_url}}" style = "color:lilac">Решить</a>
+            </td>
+        </tr>
+        <p></p>
+        {% endfor %}
+    </table>
+    </h5>
+
+    {% else %}
+        <h2>Заданий нет!</h2>
+    {% endif %}
+
+
+
+    {% endblock content %}
+
+
+</body>
+</html>
