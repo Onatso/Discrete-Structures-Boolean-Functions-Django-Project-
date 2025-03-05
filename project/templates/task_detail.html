@@ -1,35 +1,98 @@
-{% include 'flatpages/default.html' %}
 
+<!DOCTYPE html>
+{% include 'flatpages/default.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page title</title>
+    <title>T</title>
 </head>
 
-{% block title %}
-<center>
-    <h3>
-        {{task.title}}
-    </h3>
-</center>
-
-
-{% endblock title %}
-
-{% block content %}
 <body>
-<h4>{{task.description}}</h4>
+
+    {% block title %}
+    <h3>
+    <center>ЗАДАНИЯ</center>
+    </h3>
+    <hr>
+    <p></p>
+    <p></p>
+    <h5>
+
+    </h5>
+    <p></p>
+    <p></p>
+    {% endblock title %}
+
+    {% block content %}
+    {% if Tasks %}
+
+    <h5>
+    <table>
+        <tr>
+            <td>Автор задачи</td>
+            <td>Название </td>
+            <td>Описание</td>
+            <td>Уровень</td>
+        </tr>
+        {% for task in Tasks %}
+        <p></p>
+        <tr>
+            <td>{{task.author.user.username}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>{{task.level}}</td>
+            <td>
+                <a href="{{task.get_absolute_url}}" style = "color:lilac">Решить</a>
+            </td>
+        </tr>
+        <p></p>
+        {% endfor %}
+    </table>
+    </h5>
+
+    {% else %}
+        <h2>Заданий нет!</h2>
+    {% endif %}
+
+
+    {# Это Комментарии #}
+    <center>
+ {# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1"><button>1</button></a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}"><button>{{ page_obj.previous_page_number }}</button></a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   <button style = "background-color:powderblue">{{ page_obj.number }}</button>
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}"><button>{{ page_obj.next_page_number }}</button></a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}"><button>{{page_obj.paginator.num_pages}}</button></a>
+
+        {% endif %}
+    {% endif %}
+        </center>
+
+    {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <h4>Администратор сервера {{user.username}}</h4>
+        {% endif %}
+    {% else %}
+        <h6>Вы не вошли в систему</h6>
+    {% endif %}
+
+    {% endblock content %}
+
 
 
 </body>
 </html>
-
-{% endblock content %}
-
-
-
-<center>
-    <button><a href = '/'>Вернуться к списку заданий</a></button>
-</center>
