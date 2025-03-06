@@ -1,6 +1,8 @@
+<!--{% include 'flatpages/default.html' %} -->
+
 
 <!DOCTYPE html>
-{% include 'flatpages/default.html' %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,8 +57,43 @@
     {% endif %}
 
 
+    {# Это Комментарии #}
+    <center>
+ {# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1"><button>1</button></a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}"><button>{{ page_obj.previous_page_number }}</button></a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   <button style = "background-color:powderblue">{{ page_obj.number }}</button>
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}"><button>{{ page_obj.next_page_number }}</button></a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}"><button>{{page_obj.paginator.num_pages}}</button></a>
+
+        {% endif %}
+    {% endif %}
+        </center>
+
+    {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+            <h4>Администратор сервера {{user.username}}</h4>
+        {% endif %}
+    {% else %}
+        <h6>Вы не вошли в систему</h6>
+    {% endif %}
 
     {% endblock content %}
+
 
 
 </body>

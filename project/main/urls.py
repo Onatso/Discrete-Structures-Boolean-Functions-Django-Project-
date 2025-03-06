@@ -8,3 +8,5 @@ urlpatterns = [
 
    path('<int:pk>', TaskDetail.as_view(),name = 'task_detail')
 ]
+
+
